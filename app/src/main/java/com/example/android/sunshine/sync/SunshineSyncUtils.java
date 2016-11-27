@@ -26,7 +26,13 @@ import com.example.android.sunshine.data.WeatherContract;
 
 public class SunshineSyncUtils {
 
+//  TODO (10) Add constant values to sync Sunshine every 3 - 4 hours
+
     private static boolean sInitialized;
+
+//  TODO (11) Add a sync tag to identify our sync job
+
+//  TODO (12) Create a method to schedule our periodic weather sync
 
     /**
      * Creates periodic sync tasks and checks to see if an immediate sync is required. If an
@@ -45,7 +51,8 @@ public class SunshineSyncUtils {
 
         sInitialized = true;
 
-        //  COMPLETED (1) Run an Async Task to query the database and see if it's empty
+//      TODO (13) Call the method you created to schedule a periodic weather sync
+
         /*
          * We need to check to see if our ContentProvider has data to display in our forecast
          * list. However, performing a query on the main thread is a bad idea as this may
@@ -90,7 +97,6 @@ public class SunshineSyncUtils {
                  * If the Cursor was null OR if it was empty, we need to sync immediately to
                  * be able to display data to the user.
                  */
-                //  COMPLETED (2) If it is empty or we have a null Cursor, sync the weather now!
                 if (null == cursor || cursor.getCount() == 0) {
                     startImmediateSync(context);
                 }
