@@ -23,10 +23,8 @@ import android.support.annotation.NonNull;
 
 import com.example.android.sunshine.data.WeatherContract;
 
-// COMPLETED (9) Create a class called SunshineSyncUtils
 public class SunshineSyncUtils {
 
-    //  COMPLETED (12) Declare a private static boolean field called sInitialized
     private static boolean sInitialized;
 
     /**
@@ -36,24 +34,20 @@ public class SunshineSyncUtils {
      * @param context Context that will be passed to other methods and used to access the
      *                ContentResolver
      */
-    //  COMPLETED (13) Create a synchronized public static void method called initialize
     synchronized public static void initialize(@NonNull final Context context) {
 
-//      COMPLETED (14) Only execute this method body if sInitialized is false
         /*
          * Only perform initialization once per app lifetime. If initialization has already been
          * performed, we have nothing to do in this method.
          */
         if (sInitialized) return;
 
-//      COMPLETED (15) If sInitialized is false, set it to true and call startImmediateSync
         sInitialized = true;
         startImmediateSync(context);
 
 
     }
 
-    //  COMPLETED (10) Create a public static void method called startImmediateSync
     /**
      * Helper method to perform a sync immediately using an IntentService for asynchronous
      * execution.
@@ -61,7 +55,6 @@ public class SunshineSyncUtils {
      * @param context The Context used to start the IntentService for the sync.
      */
     public static void startImmediateSync(@NonNull final Context context) {
-//      COMPLETED (11) Within that method, start the SunshineSyncIntentService
         Intent intentToSyncImmediately = new Intent(context, SunshineSyncIntentService.class);
         context.startService(intentToSyncImmediately);
     }

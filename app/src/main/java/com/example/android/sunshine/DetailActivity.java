@@ -16,15 +16,25 @@
 package com.example.android.sunshine;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.android.sunshine.data.WeatherContract;
+import com.example.android.sunshine.utilities.SunshineDateUtils;
+import com.example.android.sunshine.utilities.SunshineWeatherUtils;
+
 public class DetailActivity extends AppCompatActivity {
+//      TODO (16) Implement LoaderManager.LoaderCallbacks<Cursor>
 
     /*
      * In this Activity, you can share the selected day's forecast. No social sharing is complete
@@ -32,27 +42,42 @@ public class DetailActivity extends AppCompatActivity {
      */
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
 
+    //  TODO (17) Create a String array containing the names of the desired data columns from our ContentProvider
+
+    //  TODO (18) Create constant int values representing each column name's position above
+
+    //  TODO (19) Create a constant int to identify our loader used in DetailActivity
+
     /* A summary of the forecast that can be shared by clicking the share button in the ActionBar */
     private String mForecastSummary;
 
+    //  TODO (20) Declare a private Uri field called mUri
+
+    //  TODO (10) Remove the mWeatherDisplay TextView declaration
     private TextView mWeatherDisplay;
+
+    //  TODO (11) Declare TextViews for the date, description, high, low, humidity, wind, and pressure
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        //  TODO (12) Find each of the TextViews by ID
         mWeatherDisplay = (TextView) findViewById(R.id.tv_display_weather);
 
         Intent intentThatStartedThisActivity = getIntent();
-
+        //  TODO (13) Remove the code that checks for extra text
         if (intentThatStartedThisActivity != null) {
             if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
                 mForecastSummary = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
                 mWeatherDisplay.setText(mForecastSummary);
             }
         }
+        //  TODO (14) Use getData to get a reference to the URI passed with this Activity's Intent
+        //  TODO (15) Throw a NullPointerException if that URI is null
+        //  TODO (31) Initialize the loader for DetailActivity
     }
+
 
     /**
      * This is where we inflate and set up the menu for this Activity.
@@ -120,4 +145,18 @@ public class DetailActivity extends AppCompatActivity {
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         return shareIntent;
     }
+
+    //  TODO (21) Override onCreateLoader
+
+    //  TODO (23) Override onLoadFinished
+        //  TODO (24) Check before doing anything that the Cursor has valid data
+        //  TODO (25) Display a readable date string from the cursor using SunshineDateUtils
+        //  TODO (26) Display the weather description from the cursor using SunshineDateUtils
+        //  TODO (27) Display the high & low temperatures from the cursor using SunshineDateUtils
+        //  TODO (28) Display the humidity, wind info & pressure from the cursor using SunshineDateUtils
+        //  TODO (29) Store a forecast summary in mForecastSummary
+
+
+    //  TODO (30) Override onLoaderReset, but don't do anything in it yet
+
 }

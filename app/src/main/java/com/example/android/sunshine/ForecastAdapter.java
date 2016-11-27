@@ -33,9 +33,7 @@ import com.example.android.sunshine.utilities.SunshineWeatherUtils;
  */
 class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder> {
 
-    //  COMPLETED (29) Remove the mWeatherData declaration
 
-    //  COMPLETED (16) Declare a private final Context field called mContext
     /* The context we use to utility methods, app resources and layout inflaters */
     private final Context mContext;
 
@@ -51,14 +49,13 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      * The interface that receives onClick messages.
      */
     public interface ForecastAdapterOnClickHandler {
+        //  TODO (32) Refactor onClick to accept a long as its parameter rather than a String
         void onClick(String weatherForDay);
     }
 
-    //  COMPLETED (17) Declare a private Cursor field called mCursor
     private Cursor mCursor;
 
 
-    //  COMPLETED (18) Add a Context field to the constructor and store that context in mContext
     /**
      * Creates a ForecastAdapter.
      *
@@ -107,16 +104,12 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      */
     @Override
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position) {
-//      COMPLETED (19) Delete the current body of onBindViewHolder
-
-//      COMPLETED (20) Move the cursor to the appropriate position
         mCursor.moveToPosition(position);
 
 
         /*******************
          * Weather Summary *
          *******************/
-//      COMPLETED (21) Generate a weather summary with the date, description, high and low
         /* Read date from the cursor */
         long dateInMillis = mCursor.getLong(MainActivity.INDEX_WEATHER_DATE);
         /* Get human readable string using our utility method */
@@ -134,7 +127,6 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
 
         String weatherSummary = dateString + " - " + description + " - " + highAndLowTemperature;
 
-//      COMPLETED (22) Display the summary that you created above
         forecastAdapterViewHolder.weatherSummary.setText(weatherSummary);
     }
 
@@ -146,15 +138,10 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      */
     @Override
     public int getItemCount() {
-//      COMPLETED (23) Delete the current body of getItemCount
-//      COMPLETED (24) If mCursor is null, return 0. Otherwise, return the count of mCursor
         if (null == mCursor) return 0;
         return mCursor.getCount();
     }
 
-//   COMPLETED (25) Delete setWeatherData method
-
-//  COMPLETED (26) Create a new method that allows you to swap Cursors.
     /**
      * Swaps the cursor used by the ForecastAdapter for its weather data. This method is called by
      * MainActivity after a load has finished, as well as when the Loader responsible for loading
@@ -165,7 +152,6 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      */
     void swapCursor(Cursor newCursor) {
         mCursor = newCursor;
-//      COMPLETED (27) After the new Cursor is set, call notifyDataSetChanged
         notifyDataSetChanged();
     }
 
@@ -186,15 +172,15 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         }
 
         /**
-         * This gets called by the child views during a click. For now it simply passes the current
-         * day's weather summary to the item's onClick handler so it can display the same summary info
-         * in the details view
+         * This gets called by the child views during a click. We fetch the date that has been
+         * selected, and then call the onClick handler registered with this adapter, passing that
+         * date.
          *
          * @param v the View that was clicked
          */
         @Override
         public void onClick(View v) {
-            //  COMPLETED (28) Instead of passing the String from the data array, use the weatherSummary text!
+            //  TODO (33) Instead of passing the String for the clicked item, pass the date from the cursor
             String weatherForDay = weatherSummary.getText().toString();
             mClickHandler.onClick(weatherForDay);
         }
