@@ -34,7 +34,6 @@ import com.example.android.sunshine.utilities.SunshineDateUtils;
 import com.example.android.sunshine.utilities.SunshineWeatherUtils;
 
 public class DetailActivity extends AppCompatActivity implements
-//      COMPLETED (16) Implement LoaderManager.LoaderCallbacks<Cursor>
         LoaderManager.LoaderCallbacks<Cursor> {
 
     /*
@@ -43,7 +42,6 @@ public class DetailActivity extends AppCompatActivity implements
      */
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
 
-    //  COMPLETED (17) Create a String array containing the names of the desired data columns from our ContentProvider
     /*
      * The columns of data that we are interested in displaying within our DetailActivity's
      * weather display.
@@ -59,7 +57,6 @@ public class DetailActivity extends AppCompatActivity implements
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID
     };
 
-    //  COMPLETED (18) Create constant int values representing each column name's position above
     /*
      * We store the indices of the values in the array of Strings above to more quickly be able
      * to access the data from our query. If the order of the Strings above changes, these
@@ -74,7 +71,6 @@ public class DetailActivity extends AppCompatActivity implements
     public static final int INDEX_WEATHER_DEGREES = 6;
     public static final int INDEX_WEATHER_CONDITION_ID = 7;
 
-    //  COMPLETED (19) Create a constant int to identify our loader used in DetailActivity
     /*
      * This ID will be used to identify the Loader responsible for loading the weather details
      * for a particular day. In some cases, one Activity can deal with many Loaders. However, in
@@ -87,13 +83,10 @@ public class DetailActivity extends AppCompatActivity implements
     /* A summary of the forecast that can be shared by clicking the share button in the ActionBar */
     private String mForecastSummary;
 
-    //  COMPLETED (20) Declare a private Uri field called mUri
     /* The URI that is used to access the chosen day's weather details */
     private Uri mUri;
 
-    //  COMPLETED (10) Remove the mWeatherDisplay TextView declaration
 
-    //  COMPLETED (11) Declare TextViews for the date, description, high, low, humidity, wind, and pressure
     private TextView mDateView;
     private TextView mDescriptionView;
     private TextView mHighTemperatureView;
@@ -107,7 +100,6 @@ public class DetailActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        //  COMPLETED (12) Find each of the TextViews by ID
         mDateView = (TextView) findViewById(R.id.date);
         mDescriptionView = (TextView) findViewById(R.id.weather_description);
         mHighTemperatureView = (TextView) findViewById(R.id.high_temperature);
@@ -116,14 +108,9 @@ public class DetailActivity extends AppCompatActivity implements
         mWindView = (TextView) findViewById(R.id.wind);
         mPressureView = (TextView) findViewById(R.id.pressure);
 
-        //  COMPLETED (13) Remove the code that checks for extra text
-
-        //  COMPLETED (14) Use getData to get a reference to the URI passed with this Activity's Intent
         mUri = getIntent().getData();
-        //  COMPLETED (15) Throw a NullPointerException if that URI is null
         if (mUri == null) throw new NullPointerException("URI for DetailActivity cannot be null");
 
-        //  COMPLETED (31) Initialize the loader for DetailActivity
         /* This connects our Activity into the loader lifecycle. */
         getSupportLoaderManager().initLoader(ID_DETAIL_LOADER, null, this);
     }
@@ -195,7 +182,6 @@ public class DetailActivity extends AppCompatActivity implements
         return shareIntent;
     }
 
-//  COMPLETED (21) Override onCreateLoader
     /**
      * Creates and returns a CursorLoader that loads the data for our URI and stores it in a Cursor.
      *
@@ -209,7 +195,6 @@ public class DetailActivity extends AppCompatActivity implements
 
         switch (loaderId) {
 
-            //  COMPLETED (22) If the loader requested is our detail loader, return the appropriate CursorLoader
             case ID_DETAIL_LOADER:
 
                 return new CursorLoader(this,
@@ -224,7 +209,6 @@ public class DetailActivity extends AppCompatActivity implements
         }
     }
 
-    //  COMPLETED (23) Override onLoadFinished
     /**
      * Runs on the main thread when a load is complete. If initLoader is called (we call it from
      * onCreate in DetailActivity) and the LoaderManager already has completed a previous load
@@ -238,7 +222,6 @@ public class DetailActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        //  COMPLETED (24) Check before doing anything that the Cursor has valid data
         /*
          * Before we bind the data to the UI that will display that data, we need to check the
          * cursor to make sure we have the results that we are expecting. In order to do that, we
@@ -260,7 +243,6 @@ public class DetailActivity extends AppCompatActivity implements
             return;
         }
 
-        //  COMPLETED (25) Display a readable date string from the cursor using SunshineDateUtils
         /****************
          * Weather Date *
          ****************/
@@ -278,7 +260,6 @@ public class DetailActivity extends AppCompatActivity implements
 
         mDateView.setText(dateText);
 
-//      COMPLETED (26) Display the weather description from the cursor using SunshineDateUtils
         /***********************
          * Weather Description *
          ***********************/
@@ -290,7 +271,6 @@ public class DetailActivity extends AppCompatActivity implements
         /* Set the text */
         mDescriptionView.setText(description);
 
-//      COMPLETED (27) Display the high & low temperatures from the cursor using SunshineDateUtils
         /**************************
          * High (max) temperature *
          **************************/
@@ -321,7 +301,6 @@ public class DetailActivity extends AppCompatActivity implements
         /* Set the text */
         mLowTemperatureView.setText(lowString);
 
-//      COMPLETED (28) Display the humidity, wind info & pressure from the cursor using SunshineDateUtils
         /************
          * Humidity *
          ************/
@@ -361,13 +340,11 @@ public class DetailActivity extends AppCompatActivity implements
         /* Set the text */
         mPressureView.setText(pressureString);
 
-//      COMPLETED (29) Store a forecast summary in mForecastSummary
         /* Store the forecast summary String in our forecast summary field to share later */
         mForecastSummary = String.format("%s - %s - %s/%s",
                 dateText, description, highString, lowString);
     }
 
-//  COMPLETED (30) Override onLoaderReset, but don't do anything in it yet
     /**
      * Called when a previously created loader is being reset, thus making its data unavailable.
      * The application should at this point remove any references it has to the Loader's data.

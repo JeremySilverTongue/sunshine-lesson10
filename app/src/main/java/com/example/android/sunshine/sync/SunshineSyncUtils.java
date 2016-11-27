@@ -43,6 +43,9 @@ public class SunshineSyncUtils {
         if (sInitialized) return;
 
         sInitialized = true;
+
+        //  TODO (1) Run an Async Task to query the database and see if it's empty
+            //  TODO (2) If it is empty or we have a null Cursor, sync the weather now!
         startImmediateSync(context);
 
 

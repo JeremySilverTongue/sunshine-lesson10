@@ -263,13 +263,10 @@ public class MainActivity extends AppCompatActivity implements
      * @param date Normalized UTC time that represents the local date of the weather in GMT time.
      * @see WeatherContract.WeatherEntry#COLUMN_DATE
      */
-    //  COMPLETED (34) Refactor onClick to accept a long instead of a String as its parameter
     @Override
     public void onClick(long date) {
         Intent weatherDetailIntent = new Intent(MainActivity.this, DetailActivity.class);
-        //  COMPLETED (35) Refactor onClick to pass the URI for the clicked date with the Intent
         Uri uriForDateClicked = WeatherContract.WeatherEntry.buildWeatherUriWithDate(date);
-        //  COMPLETED (36) Use setData to pass the URI
         weatherDetailIntent.setData(uriForDateClicked);
         startActivity(weatherDetailIntent);
     }
